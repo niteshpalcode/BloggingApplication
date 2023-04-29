@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blogging.dto.ApiResponse;
@@ -18,6 +19,7 @@ import com.blogging.dto.PostDto;
 import com.blogging.exception.CategoryNotFoundException;
 import com.blogging.exception.PostNotFoundException;
 import com.blogging.exception.UserNotFoundException;
+import com.blogging.model.PostResponse;
 import com.blogging.service.PostService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -55,7 +57,7 @@ public class PostController {
 		return new ResponseEntity<PostDto>(postService.findPostById(postId),HttpStatus.ACCEPTED);
 	}
 	
-	@DeleteMapping("/post/{postId}")
+	@DeleteMapping("/{postId}/post")
 	public ResponseEntity<?> deletePostById(@PathVariable("postId") Long postId)
 			throws PostNotFoundException{
 		postService.deletePost(postId);
@@ -64,14 +66,23 @@ public class PostController {
 	
 	}
 	
-	@GetMapping("/allposts/")
+	@GetMapping("/allposts")
 	public ResponseEntity<List<PostDto>> getAllPost(){
 		
 		return new ResponseEntity<List<PostDto>>(postService.findAllPost(),HttpStatus.ACCEPTED);
 	}
 	
+	@GetMapping("/allpost/")
+	public ResponseEntity<PostResponse> getAllPost(
+			@RequestParam(value="pageNumber",defaultValue ="0",required =false) Integer pageNumber,
+			@RequestParam(value="pageSize",defaultValue ="10",required =false) Integer pageSize
+			){
+		
+		return new ResponseEntity<PostResponse>(postService.findAllPost(pageNumber, pageSize),HttpStatus.OK);
+	}
 	
-	@GetMapping("/post/category/{categoryId}")
+	
+	@GetMapping("/category/{categoryId}/posts")
 	public ResponseEntity<List<PostDto>> getPostByCategory(@PathVariable("categoryId") Long categoryId)
 			throws CategoryNotFoundException{
 		
@@ -79,7 +90,7 @@ public class PostController {
 	}
 	
 	
-	@GetMapping("/posts/user/{userId}")
+	@GetMapping("/user/{userId}/posts")
 	public ResponseEntity<List<PostDto>> getPostByuser(@PathVariable("userId") Long userId)
 			throws UserNotFoundException{
 		

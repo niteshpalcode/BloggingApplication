@@ -8,6 +8,7 @@ import com.blogging.dto.PostDto;
 import com.blogging.exception.CategoryNotFoundException;
 import com.blogging.exception.PostNotFoundException;
 import com.blogging.exception.UserNotFoundException;
+import com.blogging.model.PostResponse;
 
 @Service
 public interface PostService {
@@ -22,6 +23,8 @@ public interface PostService {
 	public PostDto findPostById(Long postId)throws PostNotFoundException;
 	
 	public List<PostDto> findAllPost();
+	
+	public PostResponse findAllPost(Integer pageNumber,Integer pageSize );
 	
 	public List<PostDto> getPostByCategory(Long categoryId) throws CategoryNotFoundException;
 	

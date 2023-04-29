@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.blogging.dto.PostDto;
@@ -15,6 +18,7 @@ import com.blogging.exception.PostNotFoundException;
 import com.blogging.exception.UserNotFoundException;
 import com.blogging.model.Category;
 import com.blogging.model.Post;
+import com.blogging.model.PostResponse;
 import com.blogging.model.User;
 import com.blogging.repository.CategoryRepository;
 import com.blogging.repository.PostRepository;
@@ -132,6 +136,32 @@ List <PostDto> postDtos = posts.stream().map(post ->modelMapper.map(post, PostDt
 	public List<PostDto> searchPosts(String keyword) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public PostResponse findAllPost(Integer pageNumber, Integer pageSize ) {
+		
+	Pageable p = PageRequest.of(pageNumber, pageSize);
+		
+		Page<Post> pagePost = postRepository.findAll(p);
+		List<Post> post = pagePost.getContent();
+		
+		List<PostDto> postDtos = post.stream()
+				.map(posts -> modelMapper.map(posts, PostDto.class))
+				.collect(Collectors.toList());
+			
+		
+		PostResponse postResponse = new PostResponse();
+		postResponse.setContent(postDtos);
+		postResponse.setPageNumber(pagePost.getNumber());
+		postResponse.setPageSize(pagePost.getSize());
+		postResponse.setTotalElement(pagePost.getTotalElements());
+		postResponse.setTotalpages(pagePost.getTotalPages());
+		postResponse.setLastPage(pagePost.isLast());
+		
+		return postResponse ;
+		
+			
 	}
 	
 }
