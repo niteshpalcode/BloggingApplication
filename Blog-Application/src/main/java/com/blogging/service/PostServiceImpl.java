@@ -2,6 +2,8 @@ package com.blogging.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,20 +77,28 @@ return modelMapper.map(updatedPost, PostDto.class);
 
 	@Override
 	public void deletePost(Long postId) throws PostNotFoundException {
-		// TODO Auto-generated method stub
 		
+		Post post = postRepository.findById(postId).orElseThrow(()-> new PostNotFoundException("post not found with this postId : " +postId));
+		postRepository.delete(post);
 	}
 
 	@Override
 	public PostDto findPostById(Long postId) throws PostNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		Post post = postRepository.findById(postId).orElseThrow(()-> new PostNotFoundException("post not found with this postId : " +postId));
+
+		return modelMapper.map(post, PostDto.class);
+		
 	}
 
 	@Override
 	public List<PostDto> findAllPost() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Post> post = postRepository.findAll();
+		
+	List<PostDto> postDtos = post.stream()
+			.map(posts -> modelMapper.map(posts, PostDto.class))
+			.collect(Collectors.toList());
+		
+		return postDtos;
 	}
 
 	@Override
