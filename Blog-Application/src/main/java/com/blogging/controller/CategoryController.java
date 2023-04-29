@@ -2,6 +2,8 @@ package com.blogging.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,14 +33,14 @@ public class CategoryController {
 	
 	
 	@PostMapping("/add")
-	public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto){
+	public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
 		
 		return new ResponseEntity<CategoryDto>(categoryService.createCategory(categoryDto),HttpStatus.CREATED);
 	}
 	
 @PutMapping("/update/{categoryId}")
 public ResponseEntity<CategoryDto> updateCategory
-(@RequestBody CategoryDto categoryDto, @PathVariable("categoryId") Long id)
+(@Valid @RequestBody CategoryDto categoryDto, @PathVariable("categoryId") Long id)
 	throws CategoryNotFoundException{
 		
 		return new ResponseEntity<CategoryDto>(categoryService.updateCategory(categoryDto, id),HttpStatus.ACCEPTED);
