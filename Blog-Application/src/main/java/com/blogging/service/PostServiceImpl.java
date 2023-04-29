@@ -106,27 +106,66 @@ return modelMapper.map(updatedPost, PostDto.class);
 	}
 
 	@Override
-	public List<PostDto> getPostByCategory(Long categoryId) throws CategoryNotFoundException{
+	public PostResponse getPostByCategory(Long categoryId ,Integer pageNumber,Integer pageSize) throws CategoryNotFoundException{
 		
 		 Category category = categoryRepository.findById(categoryId)
 				  .orElseThrow(()-> new CategoryNotFoundException("category with this id is not found : " + categoryId));
 	
-		 List<Post> posts = postRepository.findByCategory(category);
+//		 List<Post> posts = postRepository.findByCategory(category);
 		
-		List<PostDto> postDtos = posts.stream().map(post ->modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+		 Pageable p = PageRequest.of(pageNumber, pageSize);
+			
+	      Page<Post> pagePost = postRepository.findByCategory(category, p);
+//			Page<Post> pagePost = postRepository.findAll(p);
+			List<Post> post = pagePost.getContent();
+			
+			List<PostDto> postDtos = post.stream()
+					.map(posts -> modelMapper.map(posts, PostDto.class))
+					.collect(Collectors.toList());
+				
+			
+			PostResponse postResponse = new PostResponse();
+			postResponse.setContent(postDtos);
+			postResponse.setPageNumber(pagePost.getNumber());
+			postResponse.setPageSize(pagePost.getSize());
+			postResponse.setTotalElement(pagePost.getTotalElements());
+			postResponse.setTotalpages(pagePost.getTotalPages());
+			postResponse.setLastPage(pagePost.isLast());
+			
+			return postResponse ;
 		
-		return postDtos;
+		
+		
 	}
 
 	@Override
-	public List<PostDto> getPostByUser(Long userId)  throws UserNotFoundException{
+	public PostResponse getPostByUser(Long userId,Integer pageNumber,Integer pageSize)  throws UserNotFoundException{
 		User user = userRepository.findById(userId).orElseThrow(()-> 
 	      new UserNotFoundException("user with this id is not found : "+ userId));
-		List<Post> posts =	postRepository.findByUser(user);
+//		List<Post> po =	postRepository.findByUser(user);
 		
-List <PostDto> postDtos = posts.stream().map(post ->modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+      Pageable p = PageRequest.of(pageNumber, pageSize);
 		
-		return postDtos;
+      Page<Post> pagePost = postRepository.findByUser(user, p);
+//		Page<Post> pagePost = postRepository.findAll(p);
+		List<Post> post = pagePost.getContent();
+		
+		List<PostDto> postDtos = post.stream()
+				.map(posts -> modelMapper.map(posts, PostDto.class))
+				.collect(Collectors.toList());
+			
+		
+		PostResponse postResponse = new PostResponse();
+		postResponse.setContent(postDtos);
+		postResponse.setPageNumber(pagePost.getNumber());
+		postResponse.setPageSize(pagePost.getSize());
+		postResponse.setTotalElement(pagePost.getTotalElements());
+		postResponse.setTotalpages(pagePost.getTotalPages());
+		postResponse.setLastPage(pagePost.isLast());
+		
+		return postResponse ;
+		
+		
 		
 		
 		

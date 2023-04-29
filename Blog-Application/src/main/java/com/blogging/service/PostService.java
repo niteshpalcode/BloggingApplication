@@ -26,9 +26,9 @@ public interface PostService {
 	
 	public PostResponse findAllPost(Integer pageNumber,Integer pageSize );
 	
-	public List<PostDto> getPostByCategory(Long categoryId) throws CategoryNotFoundException;
+	public PostResponse  getPostByCategory(Long categoryId,Integer pageNumber,Integer pageSize) throws CategoryNotFoundException;
 	
-	public List<PostDto> getPostByUser(Long userId) throws UserNotFoundException;
+	public PostResponse  getPostByUser(Long userId, Integer pageNumber,Integer pageSize) throws UserNotFoundException;
 	
 	public List<PostDto> searchPosts(String keyword);
 	

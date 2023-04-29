@@ -83,18 +83,25 @@ public class PostController {
 	
 	
 	@GetMapping("/category/{categoryId}/posts")
-	public ResponseEntity<List<PostDto>> getPostByCategory(@PathVariable("categoryId") Long categoryId)
+	public ResponseEntity<PostResponse> getPostByCategory(@PathVariable("categoryId") Long categoryId, 
+			@RequestParam(value="pageNumber",defaultValue ="0",required =false) Integer pageNumber,
+			@RequestParam(value="pageSize",defaultValue ="10",required =false) Integer pageSize
+			
+			)
 			throws CategoryNotFoundException{
 		
-		return new ResponseEntity<List<PostDto>>(postService.getPostByCategory(categoryId),HttpStatus.ACCEPTED);
+		return new ResponseEntity<PostResponse>(postService.getPostByCategory(categoryId, pageNumber, pageSize),HttpStatus.ACCEPTED);
 	}
 	
 	
 	@GetMapping("/user/{userId}/posts")
-	public ResponseEntity<List<PostDto>> getPostByuser(@PathVariable("userId") Long userId)
+	public ResponseEntity<PostResponse> getPostByuser(@PathVariable("userId") Long userId,
+			@RequestParam(value="pageNumber",defaultValue ="0",required =false) Integer pageNumber,
+			@RequestParam(value="pageSize",defaultValue ="10",required =false) Integer pageSize
+			)
 			throws UserNotFoundException{
 		
-		return new ResponseEntity<List<PostDto>>(postService.getPostByUser(userId),HttpStatus.ACCEPTED);
+		return new ResponseEntity<PostResponse>(postService.getPostByUser(userId, pageNumber, pageSize),HttpStatus.ACCEPTED);
 	}
 	
 	
