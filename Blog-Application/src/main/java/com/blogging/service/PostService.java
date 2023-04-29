@@ -23,9 +23,9 @@ public interface PostService {
 	
 	public List<PostDto> findAllPost();
 	
-	public List<PostDto> getPostByCategory(Long categoryId);
+	public List<PostDto> getPostByCategory(Long categoryId) throws CategoryNotFoundException;
 	
-	public List<PostDto> getPostByUser(Long userId);
+	public List<PostDto> getPostByUser(Long userId) throws UserNotFoundException;
 	
 	public List<PostDto> searchPosts(String keyword);
 	

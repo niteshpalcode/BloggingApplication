@@ -102,15 +102,30 @@ return modelMapper.map(updatedPost, PostDto.class);
 	}
 
 	@Override
-	public List<PostDto> getPostByCategory(Long categoryId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PostDto> getPostByCategory(Long categoryId) throws CategoryNotFoundException{
+		
+		 Category category = categoryRepository.findById(categoryId)
+				  .orElseThrow(()-> new CategoryNotFoundException("category with this id is not found : " + categoryId));
+	
+		 List<Post> posts = postRepository.findByCategory(category);
+		
+		List<PostDto> postDtos = posts.stream().map(post ->modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+		
+		return postDtos;
 	}
 
 	@Override
-	public List<PostDto> getPostByUser(Long userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PostDto> getPostByUser(Long userId)  throws UserNotFoundException{
+		User user = userRepository.findById(userId).orElseThrow(()-> 
+	      new UserNotFoundException("user with this id is not found : "+ userId));
+		List<Post> posts =	postRepository.findByUser(user);
+		
+List <PostDto> postDtos = posts.stream().map(post ->modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+		
+		return postDtos;
+		
+		
+		
 	}
 
 	@Override

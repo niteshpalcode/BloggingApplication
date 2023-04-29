@@ -69,4 +69,22 @@ public class PostController {
 		
 		return new ResponseEntity<List<PostDto>>(postService.findAllPost(),HttpStatus.ACCEPTED);
 	}
+	
+	
+	@GetMapping("/post/category/{categoryId}")
+	public ResponseEntity<List<PostDto>> getPostByCategory(@PathVariable("categoryId") Long categoryId)
+			throws CategoryNotFoundException{
+		
+		return new ResponseEntity<List<PostDto>>(postService.getPostByCategory(categoryId),HttpStatus.ACCEPTED);
+	}
+	
+	
+	@GetMapping("/posts/user/{userId}")
+	public ResponseEntity<List<PostDto>> getPostByuser(@PathVariable("userId") Long userId)
+			throws UserNotFoundException{
+		
+		return new ResponseEntity<List<PostDto>>(postService.getPostByUser(userId),HttpStatus.ACCEPTED);
+	}
+	
+	
 }
