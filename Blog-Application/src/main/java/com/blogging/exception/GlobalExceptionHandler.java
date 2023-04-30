@@ -59,7 +59,21 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<MyErrorDetails>(error, HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	@ExceptionHandler(CommentNotFoundException.class)
+	public ResponseEntity<MyErrorDetails> myCNFEHandler(CommentNotFoundException cn, WebRequest wr) {
+
+		MyErrorDetails error = new MyErrorDetails();
+		error.setTimestamp(LocalDateTime.now());
+		error.setMessage(cn.getMessage());
+		error.setDescription(wr.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetails>(error, HttpStatus.BAD_REQUEST);
+	}
 		
+	
+	
 		
 	
 }
