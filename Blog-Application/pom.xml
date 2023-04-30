@@ -8,11 +8,11 @@
 		<version>2.7.10</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bus</groupId>
-	<artifactId>Bus-Reservation-System</artifactId>
+	<groupId>com.blogging</groupId>
+	<artifactId>Blog-Application-System</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Bus-Reservation-System</name>
-	<description>This is the project on Bus Reservation System </description>
+	<name>Blog-Application-System</name>
+	<description>This is the project on Blog App </description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

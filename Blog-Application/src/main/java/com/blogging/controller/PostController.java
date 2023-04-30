@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blogging.config.AppConstants;
 import com.blogging.dto.ApiResponse;
 import com.blogging.dto.PostDto;
 import com.blogging.exception.CategoryNotFoundException;
@@ -73,9 +74,9 @@ public class PostController {
 	}
 	
 	@GetMapping("/allpost/")
-	public ResponseEntity<PostResponse> getAllPost(
-			@RequestParam(value="pageNumber",defaultValue ="0",required =false) Integer pageNumber,
-			@RequestParam(value="pageSize",defaultValue ="10",required =false) Integer pageSize
+	public ResponseEntity<PostResponse> getAllPostPagination(
+			@RequestParam(value="pageNumber",defaultValue =AppConstants.PAGE_NUMBER,required =false) Integer pageNumber,
+			@RequestParam(value="pageSize",defaultValue =AppConstants.PAGE_SIZE,required =false) Integer pageSize
 			){
 		
 		return new ResponseEntity<PostResponse>(postService.findAllPost(pageNumber, pageSize),HttpStatus.OK);
@@ -84,8 +85,8 @@ public class PostController {
 	
 	@GetMapping("/category/{categoryId}/posts")
 	public ResponseEntity<PostResponse> getPostByCategory(@PathVariable("categoryId") Long categoryId, 
-			@RequestParam(value="pageNumber",defaultValue ="0",required =false) Integer pageNumber,
-			@RequestParam(value="pageSize",defaultValue ="10",required =false) Integer pageSize
+			@RequestParam(value="pageNumber",defaultValue =AppConstants.PAGE_NUMBER,required =false) Integer pageNumber,
+			@RequestParam(value="pageSize",defaultValue =AppConstants.PAGE_SIZE,required =false) Integer pageSize
 			
 			)
 			throws CategoryNotFoundException{
@@ -95,14 +96,27 @@ public class PostController {
 	
 	
 	@GetMapping("/user/{userId}/posts")
-	public ResponseEntity<PostResponse> getPostByuser(@PathVariable("userId") Long userId,
-			@RequestParam(value="pageNumber",defaultValue ="0",required =false) Integer pageNumber,
-			@RequestParam(value="pageSize",defaultValue ="10",required =false) Integer pageSize
+	public ResponseEntity<PostResponse> getPostByUser(@PathVariable("userId") Long userId,
+			@RequestParam(value="pageNumber",defaultValue =AppConstants.PAGE_NUMBER,required =false) Integer pageNumber,
+			@RequestParam(value="pageSize",defaultValue =AppConstants.PAGE_SIZE,required =false) Integer pageSize
 			)
 			throws UserNotFoundException{
 		
 		return new ResponseEntity<PostResponse>(postService.getPostByUser(userId, pageNumber, pageSize),HttpStatus.ACCEPTED);
 	}
+	
+	
+	@GetMapping("/posts/{keyword}")
+	public ResponseEntity<List<PostDto>>getPostByTitle(@PathVariable("keyword")String keyword){
+		return new ResponseEntity<List<PostDto>>(postService.searchPosts(keyword),HttpStatus.ACCEPTED);
+	}
+	
+	
+	@GetMapping("/posts/search/{keyword}")
+	public ResponseEntity<List<PostDto>>getPostByContent(@PathVariable("keyword")String keyword){
+		return new ResponseEntity<List<PostDto>>(postService.searchPostsByContents(keyword),HttpStatus.ACCEPTED);
+	}
+	
 	
 	
 }

@@ -171,11 +171,6 @@ return modelMapper.map(updatedPost, PostDto.class);
 		
 	}
 
-	@Override
-	public List<PostDto> searchPosts(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public PostResponse findAllPost(Integer pageNumber, Integer pageSize ) {
@@ -201,6 +196,33 @@ return modelMapper.map(updatedPost, PostDto.class);
 		return postResponse ;
 		
 			
+	}
+	
+	
+	
+	@Override
+	public List<PostDto> searchPosts(String keyword) {
+		
+		
+		List<Post> post = postRepository.findByTitleContaining(keyword);
+		
+		List<PostDto> postDtos  = post.stream()
+				.map(posts->modelMapper.map(posts, PostDto.class))
+				.collect(Collectors.toList());
+		return postDtos;
+	}
+
+	@Override
+	public List<PostDto> searchPostsByContents(String keyword) {
+	
+		
+   List<Post> post = postRepository.findByContent("%"+ keyword+ "%");
+		
+		List<PostDto> postDtos  = post.stream()
+				.map(posts->modelMapper.map(posts, PostDto.class))
+				.collect(Collectors.toList());
+		return postDtos;
+	
 	}
 	
 }

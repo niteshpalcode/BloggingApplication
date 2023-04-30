@@ -24,4 +24,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 	Page<Post> findByUser(User user, Pageable p);
 	Page<Post> findByCategory(Category category , Pageable p);
+	
+	List<Post> findByTitleContaining(String title);
+	
+	
+	@Query("select p from Post p where p.content like :key")
+	List<Post> findByContent(@Param("key") String content);
+	
 }
