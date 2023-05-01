@@ -42,11 +42,11 @@ public class CommentServiceImpl  implements CommentService{
 		User user = userRepository.findById(userId).
 				orElseThrow(()-> new UserNotFoundException("user with this userid is not found" +userId));
 		
-Comment comment =modelMapper.map(commentDto,Comment.class );
- comment.setPost(post);
- comment.setUser(user);
-Comment saveComment = commentRepository.save(comment);
-return modelMapper.map(saveComment, CommentDto.class);
+          Comment comment =modelMapper.map(commentDto,Comment.class );
+           comment.setPost(post);
+           comment.setUser(user);
+           Comment saveComment = commentRepository.save(comment);
+            return modelMapper.map(saveComment, CommentDto.class);
 	  
 		
 	}

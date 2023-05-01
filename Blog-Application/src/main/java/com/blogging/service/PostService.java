@@ -24,7 +24,7 @@ public interface PostService {
 	
 	public List<PostDto> findAllPost();
 	
-	public PostResponse findAllPost(Integer pageNumber,Integer pageSize );
+	public PostResponse findAllPost(Integer pageNumber,Integer pageSize ,String sortBy ,String sortDir);
 	
 	public PostResponse  getPostByCategory(Long categoryId,Integer pageNumber,Integer pageSize) throws CategoryNotFoundException;
 	
