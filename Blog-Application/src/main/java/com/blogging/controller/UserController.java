@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.blogging.dto.ApiResponse;
 import com.blogging.dto.UserDto;
 import com.blogging.exception.UserNotFoundException;
+import com.blogging.repository.RoleRepository;
 import com.blogging.service.UserService;
 
 @RestController
@@ -32,10 +34,18 @@ public class UserController {
 	
 	
 	
+	
+	
 	@PostMapping("/add")
 	public ResponseEntity<UserDto> createNewUserHandler(@Valid @RequestBody UserDto userDto) {
 		
 		return new ResponseEntity<UserDto>(userService.createNewUser(userDto),HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<UserDto> registerNewUserHandler(@Valid @RequestBody UserDto userDto) {
+		
+		return new ResponseEntity<UserDto>(userService.registerNewUser(userDto),HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/update/{userId}")

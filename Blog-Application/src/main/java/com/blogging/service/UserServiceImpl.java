@@ -1,17 +1,24 @@
 package com.blogging.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import java.util.stream.Collectors;
 
+
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.blogging.config.AppConstants;
 import com.blogging.dto.UserDto;
 import com.blogging.exception.UserNotFoundException;
+import com.blogging.model.Role;
 import com.blogging.model.User;
+import com.blogging.repository.RoleRepository;
 import com.blogging.repository.UserRepository;
 
 @Service
@@ -23,10 +30,16 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private ModelMapper modelMapper;
-
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	@Override
 	public UserDto createNewUser(UserDto userDto) {
+		
 		User user = this.dtoToUser(userDto);
         User savedUser = this.userRepository.save(user);
         return this.userToDto(savedUser);
@@ -126,4 +139,20 @@ private UserDto userToDto(User user) {
 		
 		
 	}
+
+@Override
+public UserDto registerNewUser(UserDto userDto) {
+	
+	 User user = this.dtoToUser(userDto);
+	user.setPassword(passwordEncoder.encode(user.getPassword()));
+	
+	Role role = roleRepository.findById(AppConstants.NORMAL_USER).get();
+	
+	user.getRoles().add(role);
+     
+     User savedUser = this.userRepository.save(user);
+     return this.userToDto(savedUser);
+
+
+}
 }

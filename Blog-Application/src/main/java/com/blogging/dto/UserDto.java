@@ -1,11 +1,17 @@
 package com.blogging.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.blogging.model.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,4 +37,7 @@ public class UserDto {
     
     @NotEmpty
 	private String about;
+    
+    
+    private Set<RoleDto>roles = new HashSet<>();
 }

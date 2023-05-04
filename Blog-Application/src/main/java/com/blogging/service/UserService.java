@@ -12,6 +12,7 @@ import com.blogging.exception.UserNotFoundException;
 public interface UserService {
 
 	public UserDto createNewUser(UserDto userDto);
+	public UserDto registerNewUser(UserDto userDto);
 	public UserDto updateUser(UserDto userDto ,Long id)  throws UserNotFoundException;
 	public UserDto getUserbyId(Long id) throws UserNotFoundException;
 	public List<UserDto> getAllUser();

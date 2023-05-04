@@ -2,9 +2,13 @@ package com.blogging.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.blogging.model.Comment;
+import com.blogging.model.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,5 +35,5 @@ public class PostDto {
 	
 	private List<CommentDto> comments = new ArrayList<>();
 	
-	
+
 }
