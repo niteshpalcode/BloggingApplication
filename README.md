@@ -42,3 +42,9 @@ This is a RESTful web service for a blogging platform that provides secure CRUD 
 `https://localhost:8888/`
 
 `http://localhost:8888/swagger-ui.html`
+
+
+### some screenshots of the Swagger UI 
+![blog](https://user-images.githubusercontent.com/87421981/236360645-f2a9a65a-d749-41a1-adfe-5e7d60b570f9.PNG)
+
+
