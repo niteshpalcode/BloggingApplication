@@ -22,7 +22,11 @@ This is a RESTful web service for a blogging platform that provides secure CRUD 
 -  Admin Module
 -  Users Module
 -  Category Module
+-  Post Module
 
+### ER Diagram
+The following Diagram depicts the flow of our Entity Relation Diagram to simplify the work flow.
+![blog-er-digram](https://user-images.githubusercontent.com/87421981/236364968-56ba9d60-b1c0-418d-be51-10b9a62ff69d.png)
 
 
 ### Installation & Run
