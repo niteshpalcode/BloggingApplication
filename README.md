@@ -43,7 +43,7 @@ The following Diagram depicts the flow of our Entity Relation Diagram to simplif
 ````
 ## API Root Endpoint
 
-`https://localhost:8888/`
+`https://localhost:8888/index.html`
 
 `http://localhost:8888/swagger-ui.html`
 
